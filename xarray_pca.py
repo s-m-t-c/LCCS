@@ -1,12 +1,16 @@
+import numpy as np
+import xarray as xr
+from sklearn.decomposition import PCA
+
 def xarray_pca(dataset, variables):
-    from sklearn.decomposition import PCA
-    '''
+
+    """
     An xarray wrapper for scitkit learn PCA
     
     Parameters
     dataset: an xarray dataset with more than one data variable
     variables: a list of the variables you wish to conduct the PCA on
-    '''
+    """
 
     # Drop unecessary variables
     to_drop = []
@@ -52,11 +56,11 @@ def xarray_pca(dataset, variables):
     ### reshape the coefficient array back ###
 
     # Create empty array with the dimensions of the PCA output
-    eofs = np.empty((c.n_components_, n_grids)) * np.nan
+    arr = np.empty((c.n_components_, n_grids)) * np.nan
     # Assign components from PCA to each grid location in empty array
-    eofs[:, valid_grids] = c.components_
+    arr[:, valid_grids] = c.components_
     # Reshape array 
-    eofs = eofs.reshape((c.n_components_,) + grid_shape)
+    arr = arr.reshape((c.n_components_,) + grid_shape)
 
     ### Reshape the mean_ ###
 
@@ -71,16 +75,16 @@ def xarray_pca(dataset, variables):
 
     # extract dimension names from input DataArray
     grid_dims = a.dims[1:]
-    eofs_dims = a.dims
+    arr_dims = a.dims
     # Extract the coords for the features dimension
     grid_coords = {dim: a[dim] for dim in grid_dims}
     # Assign these to the output coords variable 
-    eofs_coords = grid_coords.copy()
+    arr_coords = grid_coords.copy()
     # Add an array to the output coords with the size of the out PCA dimensions and the key of the dimensions
-    eofs_coords[eofs_dims[0]] = np.arange(c.n_components_)
+    arr_coords[arr_dims[0]] = np.arange(c.n_components_)
     # Add new DataArray of components (directions of maximum variance int he data) to the PCA output
-    c.components_da = xr.DataArray(eofs,
-        dims=eofs_dims, coords=eofs_coords)
+    c.components_da = xr.DataArray(arr,
+        dims=arr_dims, coords=arr_coords)
     #A Add new Dataarray of per feature empirical mean_ to the PCA output
     c.mean_da = xr.DataArray(mean_,
         dims=grid_dims, coords=grid_coords)
