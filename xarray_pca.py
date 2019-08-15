@@ -21,8 +21,9 @@ def xarray_pca(dataset, variables):
     a = dataset.drop(to_drop)
 
     # Drop time dimension
-    if len(a.time)==1:
-        a = a.squeeze()
+    for var in variables:
+        if len(a[var].shape) == 3:
+            a = a.squeeze()
 
     # Convert dataset to dataarray with each variable broadcast against each other
     a = a.to_array()

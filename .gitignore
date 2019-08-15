@@ -1,0 +1,6 @@
+netcdfs/
+archive_code/
+example_outputs/
+font_config/
+__pycache__/
+.ipynb_checkpoints/
