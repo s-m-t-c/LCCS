@@ -1,0 +1,11 @@
+#PBS -q normalbw
+#PBS -P u46
+#PBS -l mem=128GB
+#PBS -l ncpus=56
+#PBS -l walltime=24:00:00
+#PBS -l wd
+
+module use /g/data/v10/public/modules/modulefiles
+module load dea
+
+python modeltrainer.py
