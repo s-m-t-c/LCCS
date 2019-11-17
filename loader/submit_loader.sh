@@ -10,4 +10,4 @@
 #PBS -l wd
 module use /g/data/v10/public/modules/modulefiles
 module load dea
-python fc_summary.py
+python loader.py

@@ -11,8 +11,10 @@ import DEADataHandling
 
 dc=datacube.Datacube(config='/g/data/u46/users/sc0554/datacube.conf')
 
-x = (1500000, 1600000)
-y = (-4000000, -3900000)
+# x = (1500000, 1600000)
+# y = (-4000000, -3900000)
+x = (1199685, 1299651)
+y = (-3800197, -3700025)
 product = 'fc'
 query = {'time': ('2015-01-01', '2015-12-31')}
 query['x'] = (x[0], x[1])
@@ -29,11 +31,11 @@ data = DEADataHandling.load_clearlandsat(dc=dc, query=query, product=product,
                                   satellite_metadata=True)
 # Create a mask to show areas where total vegetation is greater than the bare-soil fraction of a pixel for
 # each scene
-tv_mask = data['BS'] < data['PV']
+tv_mask = data['BS'] < (data['PV'] + data['NPV'])
 tv = tv_mask.where(data['PV'] > 0)
 # Calculate the proportion of time where total vegetation is greater than the bare soil fraction of a pixel
 # for the input year
-tv_summary = tv.mean(dim='time')
+tv_summary = tv.mean(dim='time', skipna=True)
 # Create a boolean layer where vegetation is assigned if greater than .167
 # tv_summary_filt = tv_summary > .167
 # Convert booleans to binary
@@ -43,7 +45,7 @@ tv_summary = tv.mean(dim='time')
 
 meta_d = data.isel(time=0).drop('time')
 out = xr.Dataset({'fc_summary': (meta_d.dims, tv_summary)}, coords=meta_d.coords, attrs=meta_d.attrs)
-helpers.write_geotiff('cbr_pvfcsummary.tif', out)
+helpers.write_geotiff('testarea_pvfcsummary.tif', out)
 
 
 tv_mask = data['BS'] < data['NPV']

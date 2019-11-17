@@ -1,5 +1,5 @@
 from datacube.virtual import construct, Transformation, Measurement
-from skimage.segmentation import quickshift
+## from skimage.segmentation import quickshift
 from scipy import stats
 import numpy as np
 from sklearn.impute import SimpleImputer
@@ -28,15 +28,16 @@ class Cultivated(Transformation):
         # Calculate the mean of all the tmad inputs
         tmad_mean = np.mean(np.stack([tmad.edev.data, tmad.sdev.data, tmad.bcdev.data], axis=-1), axis=-1)
         # Convert type to float64 (required for quickshift)
-        tmad_mean = np.float64(tmad_mean)
+        ## tmad_mean = np.float64(tmad_mean)
         # Segment
-        tmad_seg = quickshift(tmad_mean, kernel_size=5, convert2lab=False, max_dist=500, ratio=0.5)
+        ## tmad_seg = quickshift(tmad_mean, kernel_size=5, convert2lab=False, max_dist=500, ratio=0.5)
         # Calculate the median for each segment
-        tmad_median_seg = scipy.ndimage.median(input=tmad_mean, labels=tmad_seg, index=tmad_seg)
+        ## tmad_median_seg = scipy.ndimage.median(input=tmad_mean, labels=tmad_seg, index=tmad_seg)
         # Set threshold as 10th percentile of mean TMAD
         thresh = np.percentile(tmad_mean.ravel(), 10)
         # Create boolean layer using threshold
-        tmad_thresh = tmad_median_seg < thresh
+        ## tmad_thresh = tmad_median_seg < thresh
+        tmad_thresh = tmad_mean < thresh
         # Convert from boolean to binary
         tmad_thresh = tmad_thresh * 1
         #tmad_thresh = tmad_thresh.astype(float)

@@ -2,5 +2,8 @@ netcdfs/
 archive_code/
 example_outputs/
 font_config/
+decision_tree/input
+decision_tree/output
+decision_tree/training_data
 __pycache__/
 .ipynb_checkpoints/

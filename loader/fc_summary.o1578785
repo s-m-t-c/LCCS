@@ -1,0 +1,22 @@
+Loading ls5
+    Skipping ls5; no valid data for query
+Loading ls7
+    Ignoring SLC-off observations for ls7
+    Skipping ls7; no valid data for query
+Loading ls8
+    Loading 36 filtered ls8 timesteps
+Returning ls8 data
+    Replacing invalid -999 values with NaN (data will be coerced to float64)
+
+======================================================================================
+                  Resource Usage on 2019-08-29 17:25:43:
+   Job Id:             1578785.r-man2
+   Project:            u46
+   Exit Status:        1
+   Service Units:      0.28
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:05:03                                   
+   Memory Requested:   128.0GB               Memory Used: 17.37GB         
+   Walltime requested: 02:00:00            Walltime Used: 00:05:42        
+   JobFS requested:    2.0GB                  JobFS used: 0B              
+======================================================================================

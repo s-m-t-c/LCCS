@@ -1,0 +1,41 @@
+Traceback (most recent call last):
+  File "/g/data/v10/public/modules/dea-env/20190709/lib/python3.6/site-packages/xarray/core/variable.py", line 81, in as_variable
+    obj = Variable(*obj)
+  File "/g/data/v10/public/modules/dea-env/20190709/lib/python3.6/site-packages/xarray/core/variable.py", line 262, in __init__
+    self._dims = self._parse_dimensions(dims)
+  File "/g/data/v10/public/modules/dea-env/20190709/lib/python3.6/site-packages/xarray/core/variable.py", line 440, in _parse_dimensions
+    % (dims, self.ndim))
+ValueError: dimensions ('x', 'y') must have the same length as the number of data dimensions, ndim=0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "loader.py", line 33, in <module>
+    out = xr.Dataset({'fc': (meta_d.dims, data)}, coords=meta_d.coords, attrs=meta_d.attrs)
+  File "/g/data/v10/public/modules/dea-env/20190709/lib/python3.6/site-packages/xarray/core/dataset.py", line 425, in __init__
+    self._set_init_vars_and_dims(data_vars, coords, compat)
+  File "/g/data/v10/public/modules/dea-env/20190709/lib/python3.6/site-packages/xarray/core/dataset.py", line 447, in _set_init_vars_and_dims
+    data_vars, coords, compat=compat)
+  File "/g/data/v10/public/modules/dea-env/20190709/lib/python3.6/site-packages/xarray/core/merge.py", line 380, in merge_data_and_coords
+    indexes=indexes)
+  File "/g/data/v10/public/modules/dea-env/20190709/lib/python3.6/site-packages/xarray/core/merge.py", line 457, in merge_core
+    expanded = expand_variable_dicts(aligned)
+  File "/g/data/v10/public/modules/dea-env/20190709/lib/python3.6/site-packages/xarray/core/merge.py", line 224, in expand_variable_dicts
+    var = as_variable(var, name=name)
+  File "/g/data/v10/public/modules/dea-env/20190709/lib/python3.6/site-packages/xarray/core/variable.py", line 86, in as_variable
+    '{} to Variable.'.format(obj))
+ValueError: Could not convert tuple of form (dims, data[, attrs, encoding]): (Frozen(SortedKeysDict({'y': 4007, 'x': 3999})), <xarray.Dataset>
+Dimensions:    (time: 36, x: 3999, y: 4007)
+Coordinates:
+  * time       (time) datetime64[ns] 2015-01-01T00:02:16 ... 2015-12-19T00:02:23.500000
+  * y          (y) float64 -3.7e+06 -3.7e+06 -3.7e+06 ... -3.8e+06 -3.8e+06
+  * x          (x) float64 1.2e+06 1.2e+06 1.2e+06 ... 1.3e+06 1.3e+06 1.3e+06
+Data variables:
+    BS         (time, y, x) float64 nan nan nan nan nan ... nan nan nan nan nan
+    PV         (time, y, x) float64 nan nan nan nan nan ... nan nan nan nan nan
+    NPV        (time, y, x) float64 nan nan nan nan nan ... nan nan nan nan nan
+    UE         (time, y, x) float64 nan nan nan nan nan ... nan nan nan nan nan
+    data_perc  (time, y, x) float64 nan nan nan nan nan ... nan nan nan nan nan
+    satellite  (time) <U3 'ls8' 'ls8' 'ls8' 'ls8' ... 'ls8' 'ls8' 'ls8' 'ls8'
+Attributes:
+    crs:      EPSG:3577) to Variable.
