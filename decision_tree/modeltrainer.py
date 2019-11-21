@@ -15,6 +15,7 @@ import numpy as np
 
 # Import external functions from dea-notebooks using relative link to 10_Scripts
 # Sean's user on NCI
+sys.path.append('/home/552/dc4749/development/dea-notebooks/Scripts')
 sys.path.append('/g/data/u46/users/sc0554/dea-notebooks/Scripts')
 # Assume all repos are checked out to same location so get relative to this.
 sys.path.append('../../dea-notebooks/Scripts')
@@ -30,7 +31,7 @@ def extract_data(shp_list, product, output_file=None, feature_stats=None):
                                                      product=product,
                                                      time=('2015-01-01', '2015-12-31'),
                                                      crs='EPSG:3577', field='classnum',
-                                                     calc_indices=False,
+                                                     calc_indices=True,
                                                      feature_stats=feature_stats)
         except Exception as e:
             print("Failed to extract data: {}".format(e))
@@ -47,6 +48,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract training data")
     parser.add_argument("inputshps", nargs="+",
                         help="Input shapefiles ")
+    parser.add_argument("-o", "--output", type=str, required=False,
+                        help="Output file with stats",
+                        default=None)
     parser.add_argument("--product", type=str, required=False,
                         help="ODC product (e.g., ls8_nbart_geomedian_annual "
                              "or ls8_nbart_tmad_annual",
@@ -69,7 +73,8 @@ if __name__ == "__main__":
     elif args.geomedian:
         feature_stats = "geomedian"
 
-    extract_data(args.inputshps, args.product, feature_stats=feature_stats)
+    extract_data(args.inputshps, args.product, output_file=args.output,
+                 feature_stats=feature_stats)
 
 
 
