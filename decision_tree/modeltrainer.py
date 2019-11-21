@@ -22,14 +22,14 @@ sys.path.append('../../dea-notebooks/Scripts')
 from dea_classificationtools import get_training_data_for_shp
 
 
-def extract_data(shp_list, product, output_file=None, feature_stats=None):
+def extract_data(shp_list, product, year, output_file=None, feature_stats=None):
     out_train = []
     for shp_num, path in enumerate(shp_list):
         print("[{:02}/{:02}]: {}".format(shp_num + 1, len(shp_list), path))
         try:
             column_names = get_training_data_for_shp(path, out_train,
                                                      product=product,
-                                                     time=('2015-01-01', '2015-12-31'),
+                                                     time=('{}-01-01'.format(year), '2015-12-31'.format(year)),
                                                      crs='EPSG:3577', field='classnum',
                                                      calc_indices=True,
                                                      feature_stats=feature_stats)
@@ -45,7 +45,9 @@ def extract_data(shp_list, product, output_file=None, feature_stats=None):
                model_input, header = ' '.join(column_names), fmt = '%.4f')
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Extract training data")
+    parser = argparse.ArgumentParser(
+        description="Extract training data",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("inputshps", nargs="+",
                         help="Input shapefiles ")
     parser.add_argument("-o", "--output", type=str, required=False,
@@ -55,6 +57,9 @@ if __name__ == "__main__":
                         help="ODC product (e.g., ls8_nbart_geomedian_annual "
                              "or ls8_nbart_tmad_annual",
                         default="ls8_nbart_geomedian_annual")
+    parser.add_argument("--year", type=str, required=False,
+                        help="Year to extract data for",
+                        default="2015")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--mean", action='store_true', required=False,
                         help="Extract the mean of each feature rather than "
