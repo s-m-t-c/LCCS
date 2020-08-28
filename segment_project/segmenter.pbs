@@ -1,0 +1,14 @@
+
+#PBS -q normal
+#PBS -P u46
+#PBS -l mem=190GB
+#PBS -l ncpus=48
+#PBS -l walltime=4:00:00
+#PBS -l wd
+#PBS -l storage=gdata/v10+gdata/r78+gdata/rs0+gdata/u46+gdata/fk4
+
+module use /g/data/v10/public/modules/modulefiles
+module load dea
+
+python3 segmenter.py
+    
